@@ -1,24 +1,23 @@
-const express = require('express');
+const express = require("express");
 const app = express();
-const fs = require('fs');
-const nedb = require('nedb');
-const db = new nedb({ filename: 'locations.db', autoload: true });
+const nedb = require("nedb");
+const db = new nedb({ filename: "locations.db", autoload: true });
 
-app.use(express.json({ limit: '1mb' }));
+app.use(express.json({ limit: "1mb" }));
 
 //Statisches Verzeichnis setzen
-app.use(express.static('public'));
+app.use(express.static("public"));
 
-app.use('/', (req, res, next) => {
+app.use("/", (req, res, next) => {
   console.log(
     `Zugriff am: ${new Date().toLocaleString()}     von Client: ${req.ip}`
   );
   next();
 });
 
-app.post('/api', (req, res) => {
+app.post("/api", (req, res) => {
   db.insert(req.body);
-  res.send({ status: 'Server meldet Post-Anfrage bearbeitet' });
+  res.send({ status: "Server meldet Post-Anfrage bearbeitet" });
 });
 
 const PORT = 8080;
